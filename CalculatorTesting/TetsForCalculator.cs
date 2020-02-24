@@ -11,8 +11,7 @@ namespace CalculatorTesting
     public class TetsForCalculator
     {
         Calculator calculator = new Calculator();
-        double a = 6.6;
-        double b = 1.4;
+
 
         [Test, Combinatorial]
         public void TestAdding1(
@@ -37,9 +36,16 @@ namespace CalculatorTesting
         }
 
         [Test(Description ="Check of values adding")]
-        public void TestAdding4(double a, double b)
+        public void TestAdding4()
         {
-            Assert.That(calculator.Add(a, b) == 8.0);
+            Assert.That(calculator.Add(6.6, 1.4) == 8.0);
+            Assert.That(calculator.Add(6.6, 1.4), Is.Not.Null);
+        }
+
+        [TestCase(4.45,  0)]
+        public void TesttDivide0(double a, double b) 
+        {
+            Assert.That((a / b), Is.Not.Null);
         }
 
     }

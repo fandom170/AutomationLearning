@@ -22,7 +22,7 @@ namespace CalculatorTesting
         }
 
 
-        [Test(ExpectedResult = 256)]
+        [Test(ExpectedResult = 256), Description]
         public double PowCheck()
         {
             return scCalculator.Pow(4, 4);
@@ -47,10 +47,10 @@ namespace CalculatorTesting
         public void AddingWait()
         {
             double n = scCalculator.Pow(5, 25);
-            Assert.That(n > 1, "All OK");
+            Assert.That(n, Is.GreaterThan(1), "All OK");
         }
 
-        [Test, Ignore(reason: "Just for test")]
+        [Test, Ignore(reason: "")Until()]
         public void TestIgnore()
         {
             Assert.That(true == false);
@@ -94,6 +94,7 @@ namespace CalculatorTesting
         [TearDown]
         public void ThisIsTheEnd() 
         {
+            scCalculator = null;
             //something what can be done in the end
         }
 

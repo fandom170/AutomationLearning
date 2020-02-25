@@ -12,8 +12,11 @@ namespace WebDriverHomeworks
     {
         private IWebDriver driver;
 
+        [FindsBy(How = How.Id, Using = "Page-1")]
+        public IWebElement PageTitle { get; set; }
+
         [FindsBy(How = How.XPath, Using = ".//div")]
-        public IWebElement AllDiv { get; set; }
+        public List <IWebElement> AllDiv { get; set; }
 
     }
 }

@@ -19,7 +19,7 @@ namespace CalculatorTesting
             [Values (5.31, -9.14, 0.0)] double b
             ) 
         {
-            calculator.Add(a, b);
+            Assert.AreEqual(a + b, calculator.Add(a, b), "message");
         }
 
         [TestCase(7.5, 2.5)]
@@ -38,7 +38,7 @@ namespace CalculatorTesting
         [Test(Description ="Check of values adding")]
         public void TestAdding4()
         {
-            Assert.That(calculator.Add(6.6, 1.4) == 8.0);
+            Assert.That(calculator.Add(6.6, 1.4), Is.EqualTo(8.0), "");
             Assert.That(calculator.Add(6.6, 1.4), Is.Not.Null);
         }
 

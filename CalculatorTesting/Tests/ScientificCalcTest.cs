@@ -13,7 +13,7 @@ namespace CalculatorTesting
     class ScientificCalcTest
     {
         ScientificCalculator scCalculator;
-        [SetUp]
+        [OneTimeSetUp]
         public void Starting()
         {
             //something optimistic
@@ -22,13 +22,15 @@ namespace CalculatorTesting
         }
 
 
-        [Test(ExpectedResult = 256), Description]
+        [Test(ExpectedResult = 256)] 
+        [Description ("Returning expected result")]
         public double PowCheck()
         {
             return scCalculator.Pow(4, 4);
         }
 
         [Test, Repeat(5)]
+        [Description("Testing of repeat")]
         public void AddingSeverlTimesCheck()
         {
             Assert.That(scCalculator.Add(2, _dataStorage.partValue) == _dataStorage.partValue + 2, Is.True);
@@ -50,10 +52,10 @@ namespace CalculatorTesting
             Assert.That(n, Is.GreaterThan(1), "All OK");
         }
 
-        [Test, Ignore(reason: "")Until()]
+        [Test, Ignore(reason: "Ignored for test execution", Until = "2020-03-01")]
         public void TestIgnore()
         {
-            Assert.That(true == false);
+            //Assert.That(true == false);
         }
 
 

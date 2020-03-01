@@ -49,12 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Calculator.cs" />
-    <Compile Include="ScientificCalcTest.cs" />
-    <Compile Include="ScientificCalculator.cs" />
-    <Compile Include="TetsForCalculator.cs" />
+    <Compile Include="Program\Calculator.cs" />
+    <Compile Include="Tests\ScientificCalcTest.cs" />
+    <Compile Include="Program\ScientificCalculator.cs" />
+    <Compile Include="Tests\TetsForCalculator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="_dataStorage.cs" />
+    <Compile Include="Program\_dataStorage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

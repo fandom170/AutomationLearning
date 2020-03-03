@@ -11,7 +11,7 @@ namespace WebDriverHomeworks
         public static string URLGISMETEO = "http:\\www.gismeteo.com";
         public static string URLWIZZ = "http:\\www.wizzair.com";
 
-        public static string webDriverPlace = @"D:\Learning";
+        public static string webDriverPlace = @"C:\Automation\Driver";
 
         public static string FlightFrom = "Kiev";
         public static string FlightTo = "Copenhagen";

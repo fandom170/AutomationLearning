@@ -23,9 +23,7 @@ namespace WebDriverHomeworks
             driver.Manage().Window.Maximize();
             driver.Url = _helpers.URLGISMETEO;
             pageGismeteo = new PageGismeteo();
-
             //WebDriverWait wait = new WebDriverWait(driver, waitForElement);
-
         }
 
         [Test, Order(0)]
@@ -103,12 +101,14 @@ namespace WebDriverHomeworks
             Assert.IsNotNull(сity);
         }
 
-        //7. Find the element that describes city next after Киев
+        //7. Find the element that describes city next after another city
         [Test]
-        [Description("Get element by exact text"), Order(7)]
+        [Description("Get next element after particular lement"), Order(7)]
         public void GetNextElement() 
         {
-            IWebElement nextCity = driver.FindElement(By.XPath(".//*[contains(text(), 'Kharkiv')][2]/../*"));
+            string cityName = "London";
+            IWebElement nextCity = driver.FindElement(By.XPath(".//*[contains(text(), '" + cityName + "')]/ancestor::div/a"));
+            Assert.IsNotNull(nextCity);
         }
         //8. Find all top menu link
         [Test]
@@ -124,7 +124,7 @@ namespace WebDriverHomeworks
         [Description("Find 3-days link")]
         public void GetThreeDaysLink() 
         {
-            IWebElement threeDaysLink = driver.FindElement(By.XPath(".//a[contains(text(), '3 дня')]"));
+            IWebElement threeDaysLink = driver.FindElement(By.XPath(".//li[@class = 'nolink subnav_item']//a[contains(text(), '3')]"));
             Assert.That(threeDaysLink, Is.Not.Null, "Three days link element was not found");
         }
 
@@ -133,7 +133,7 @@ namespace WebDriverHomeworks
         [Description("Find current weekday")]
         public void GetCurrentWeekDay() 
         {
-            DateTime now = DateTime.Today;
+            DateTime now = DateTime.Now;
             
             string date = driver.FindElement(By.XPath(".//div[@id = 'time']/span")).Text;
             Assert.That(date, Is.EqualTo(now.ToString("ddd, d MMMM, HH:mm")));

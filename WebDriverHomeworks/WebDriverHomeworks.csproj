@@ -56,9 +56,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\TestBase.cs" />
+    <Compile Include="Locators\WizzAirConfirmationLocators.cs" />
     <Compile Include="Locators\WizzAirMainPageLocators.cs" />
+    <Compile Include="Locators\WizzAirPassengerLuggage.cs" />
     <Compile Include="Locators\WizzAirSearchResultsLocators.cs" />
+    <Compile Include="Locators\WizzAirSignInLocators.cs" />
     <Compile Include="Pages\WizzAirMain.cs" />
+    <Compile Include="Pages\WizzAirSearchResults.cs" />
+    <Compile Include="Pages\WizzAirSelectPassengerData.cs" />
+    <Compile Include="Pages\WizzAirSignIn.cs" />
     <Compile Include="Tests\PageTesting.cs" />
     <Compile Include="Pages\PageGismeteo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

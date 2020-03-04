@@ -15,6 +15,9 @@ namespace WebDriverHomeworks
 
         public static string FlightFrom = "Kiev";
         public static string FlightTo = "Copenhagen";
+
+        public static string PassengerFN = "Arnold";
+        public static string PassengerLN = "Doubledecker";
     }
 
 }

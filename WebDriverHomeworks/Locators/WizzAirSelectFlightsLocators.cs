@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebDriverHomeworks.Locators
 {
-    static class WizzAirSearchResultsLocators
+    public static class WizzAirSelectFlightsLocators
     {
         public static string FlightDate = ".flight-select__flight-info__day";
         public static string PointFrom;
@@ -18,7 +18,7 @@ namespace WebDriverHomeworks.Locators
 
         public static string ButtonAcceptFlight = ".fare-button__background"; //css
 
-        public static string ButtonPlanSelect = "fare3841-middle"; //ID
+        public static string ButtonMiddlePlanSelect = "fare3841-middle"; //ID
 
         public static string FlightBack;
 

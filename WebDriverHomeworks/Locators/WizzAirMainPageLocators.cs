@@ -9,13 +9,11 @@ namespace WebDriverHomeworks.Locators
 {
     static class WizzAirMainPageLocators
     {
-        public static string FlightFrom =   "search-departure-station";
-        public static string FlightTo =     "search-arrival-station";
+        public static string FlightFrom =   "search-departure-station"; //id
+        public static string FlightTo =     "search-arrival-station"; //Id
 
-        public static string FindButton = ".//div[contains(@class,'flight-search__panel__fieldset')]/button";
+        public static string DatePicker; //will be added if needed
 
-
-
-
+        public static string FindButton = ".//div[contains(@class,'flight-search__panel__fieldset')]/button"; //xpath
     }
 }

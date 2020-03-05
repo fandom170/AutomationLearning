@@ -20,7 +20,7 @@ namespace WebDriverHomeworks.Base
             driver.Manage().Window.Maximize();
             driver.Url = _helpers.URLWIZZ;
 
-            //MainPage = new Pages.WizzAirMain();
+            MainPage = new Pages.WizzAirMain(driver);
 
         }
 

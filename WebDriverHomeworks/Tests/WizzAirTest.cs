@@ -16,7 +16,11 @@ namespace WebDriverHomeworks
         [Description("Click on Find button")]
         public void RunSearch() 
         {
-           
+            MainPage.FieldFrom().Clear();
+            MainPage.FieldFrom().SendKeys(_helpers.FlightFrom);
+            MainPage.FieldTo().Clear();
+            MainPage.FieldTo().SendKeys(_helpers.FlightTo);
+            MainPage.SearchFlight().Click();
             
         }
 

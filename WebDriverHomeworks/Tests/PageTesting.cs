@@ -31,7 +31,7 @@ namespace WebDriverHomeworks
         {
             
             String title = driver.Title;
-            //Assert.That(pageGismeteo.PageTitle.Displayed);
+            Assert.That(title, Is.Not.Null, "Page was not loaded or, at least, does not have a title");
         }
         
         [Test(Description = "Get all Div from the page"), Order(1)]
@@ -46,11 +46,11 @@ namespace WebDriverHomeworks
             Assert.That(lisOfAllDivs.Count() > 0, Is.True, "If you see this message, then any divs has not been found");
         }
 
-        //2. find all div with h2
-        [Test(Description = "Get all divs with h2"), Order(2)]
+        //2. find all div with h1
+        [Test(Description = "Get all divs with h1"), Order(2)]
         public void GetH2Divs() 
         {
-            IList<IWebElement> lisOfAllH2Divs = driver.FindElements(By.XPath(".//div[@h2]"));
+            IList<IWebElement> lisOfAllH2Divs = driver.FindElements(By.XPath(Locators.GisMeteoLocators.DivWithH1));
             foreach (IWebElement webElem in lisOfAllH2Divs)
             {
                 //DO NOTHING
@@ -62,17 +62,16 @@ namespace WebDriverHomeworks
         [Test(Description = "Get all div with news"), Order(3)]
         public void GetAllNews() 
         {
-            IList<IWebElement> ListOfNews = driver.FindElements(By.CssSelector(".readmore_item"));
-            Assert.IsNotNull(ListOfNews);
+            IList<IWebElement> ListOfNews = driver.FindElements(By.CssSelector(Locators.GisMeteoLocators.AllNewsTiles));
+            Assert.IsNotNull(ListOfNews,  "");
         }
 
-        //4. Find the last span with news title////////////////////////////////////////////////
+        //4. Find the last element from news tiles////////////////////////////////////////////////
         [Test(Description = ""), Order(4)]
         public void GetLastSpan() 
         {
-            string city = "Kharkiv";
-            IWebElement spanCity = driver.FindElement(By.XPath(".//*[@class = 'readmore_item']//span[last()]"));//(".//span[@class = 'cities_name' and last() and text = '"+ city +"']"));
-            Assert.IsNotNull(spanCity);
+            IWebElement LastNews = driver.FindElement(By.XPath(Locators.GisMeteoLocators.LastNewsElement));
+            Assert.IsNotNull(LastNews, "");
         }
 
         //5. Get all titles from items from #3
@@ -82,13 +81,13 @@ namespace WebDriverHomeworks
         {
             List<string> TitlesList = new List<string>();
 
-            IList <IWebElement> newsTiles = driver.FindElements(By.CssSelector(".readmore_title"));
+            IList <IWebElement> newsTiles = driver.FindElements(By.CssSelector(Locators.GisMeteoLocators.TitlesFromNews));
             foreach (IWebElement elem in newsTiles) 
             {
                 TitlesList.Add(elem.Text);
-                Assert.IsNotNull(elem.Text);
+                Assert.IsNotNull(elem.Text, "");
             }
-            Assert.That(TitlesList.Count > 0, "List is empty");
+            Assert.That(TitlesList.Count, Is.GreaterThan(0), "List is empty");
         }
         
         //6. Find element with text ...////////////////////////////////////////////////////////
@@ -107,7 +106,7 @@ namespace WebDriverHomeworks
         public void GetNextElement() 
         {
             string cityName = "London";
-            IWebElement nextCity = driver.FindElement(By.XPath(".//*[contains(text(), '" + cityName + "')]/ancestor::div/a"));
+            IWebElement nextCity = driver.FindElement(By.XPath($".//*[contains(text(), {cityName})]/ancestor::div/a"));
             Assert.IsNotNull(nextCity);
         }
         //8. Find all top menu link
@@ -115,7 +114,7 @@ namespace WebDriverHomeworks
         [Description("Get element by css using tag"), Order(8)]
         public void GetAllLinksFromMenu() 
         {
-            IList<IWebElement> linkedMenu = driver.FindElements(By.CssSelector("li.nav_item a"));
+            IList<IWebElement> linkedMenu = driver.FindElements(By.CssSelector(Locators.GisMeteoLocators.ItemsFromTopMenu));
             Assert.IsNotNull(linkedMenu);
         }
 
@@ -124,7 +123,7 @@ namespace WebDriverHomeworks
         [Description("Find 3-days link")]
         public void GetThreeDaysLink() 
         {
-            IWebElement threeDaysLink = driver.FindElement(By.XPath(".//li[@class = 'nolink subnav_item']//a[contains(text(), '3')]"));
+            IWebElement threeDaysLink = driver.FindElement(By.XPath(Locators.GisMeteoLocators.ThreeDaysLink));
             Assert.That(threeDaysLink, Is.Not.Null, "Three days link element was not found");
         }
 
@@ -135,10 +134,11 @@ namespace WebDriverHomeworks
         {
             DateTime now = DateTime.Now;
             
-            string date = driver.FindElement(By.XPath(".//div[@id = 'time']/span")).Text;
+            string date = driver.FindElement(By.XPath(Locators.GisMeteoLocators.CurrentWeekDay)).Text;
             Assert.That(date, Is.EqualTo(now.ToString("ddd, d MMMM, HH:mm")));
             
         }
+        
         //11. Find temperature when it's Малооблачно (1 element!!)
         [Test, Order(11)]
         [Description("Get temperature using axis")]
@@ -147,6 +147,9 @@ namespace WebDriverHomeworks
             //IWebElement TemperatureDate = driver.FindElement(By.XPath(".//span[@class = 'tooltip' and contains(@data-text, 'Малооблачно')]/following-sibling           //span[contains(@class, unit_temperature_c)]"));
             int counter = 1;
             IList<IWebElement> weatherForecast = driver.FindElements(By.XPath(".//div[contains(@class, '_line iconline clearfix')]//span[@class = 'tooltip']"));
+
+            IWebElement WeatherAlmostsunny = driver.FindElement(By.XPath(".//div[@class = 'weather_item']//span[@class = 'tooltip' and contains(text(), 'Малооблачно')]/ancestor:div[@class ='_line iconline clearfix']/following-sibling::"));
+
             foreach (IWebElement elem in weatherForecast) 
             {
 

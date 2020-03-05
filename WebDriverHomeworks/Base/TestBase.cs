@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebDriverHomeworks.Base
 {
-    class TestBase
+    public class TestBase
     {
         public IWebDriver driver;
         public Pages.WizzAirMain MainPage;

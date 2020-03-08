@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 
 namespace WebDriverHomeworks.Base
 {
-    public class TestBase
+    public class TestBase : InitPages
     {
         public IWebDriver driver;
-        public Pages.WizzAirMain MainPage;
-        public Pages.WizzAirSelectFlights SelectFlights; 
+        public WebDriverWait Wait;
 
         [OneTimeSetUp]
         [Obsolete]
         public void SetUp()
         {
+             Wait = new WebDriverWait(driver, new TimeSpan(0, 0, 5));
+
             driver = new OpenQA.Selenium.Chrome.ChromeDriver(_helpers.webDriverPlace);
             driver.Manage().Window.Maximize();
             driver.Url = _helpers.URLWIZZ;

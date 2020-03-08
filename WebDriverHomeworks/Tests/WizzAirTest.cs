@@ -21,14 +21,21 @@ namespace WebDriverHomeworks
             MainPage.FieldTo().Clear();
             MainPage.FieldTo().SendKeys(_helpers.FlightTo);
             MainPage.SearchFlight().Click();
+
+            //window handling
             
         }
 
+        
+        
         [Test, Order(1)]
         [Description("Verify flight data")]
         public void VerifyData() 
-        { 
-        
+        {
+            SelectFlights.ButtonShowPrices().Click();
+            SelectFlights.ButtonMiddlePrice().Click();
+
+
         }
 
         [Test, Order(2)]

@@ -9,7 +9,7 @@ using WebDriverHomeworks.Locators;
 
 namespace WebDriverHomeworks.Pages
 {
-    class WizzAirSelectFlights
+    public class WizzAirSelectFlights
     {
         private IWebDriver driver;
 
@@ -20,9 +20,13 @@ namespace WebDriverHomeworks.Pages
             PageFactory.InitElements(driver, this);
         }
 
+        public IWebElement ButtonShowPrices() => driver.FindElement(By.CssSelector(WizzAirSelectFlightsLocators.ButtonAcceptFlight));
+        public IWebElement ButtonMiddlePrice() => driver.FindElement(By.Id(WizzAirSelectFlightsLocators.ButtonMiddlePlanSelect)); 
 
-        IWebElement ButtonShowPrices() => driver.FindElement(By.CssSelector(WizzAirSelectFlightsLocators.ButtonAcceptFlight));
+        //date
 
-        IWebElement ButtonMiddlePrice() => driver.FindElement(By.Id(WizzAirSelectFlightsLocators.ButtonMiddlePlanSelect)); 
+        //pointfrom
+
+        //point to
     }
 }

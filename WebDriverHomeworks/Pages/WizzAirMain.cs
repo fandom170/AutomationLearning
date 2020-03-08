@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebDriverHomeworks.Pages
 {
-    class WizzAirMain
+    public class WizzAirMain
     {
         private IWebDriver driver;
 
@@ -19,7 +19,7 @@ namespace WebDriverHomeworks.Pages
             PageFactory.InitElements(driver, this);
         }
 
-        public IWebElement FieldFrom() => driver.FindElement(By.Id(Locators.WizzAirMainPageLocators.FlightFrom));
+        public IWebElement FieldFrom => driver.FindElement(By.Id(Locators.WizzAirMainPageLocators.FlightFrom));
         
         public IWebElement FieldTo() => driver.FindElement(By.Id(Locators.WizzAirMainPageLocators.FlightTo));
         

@@ -26,8 +26,6 @@ namespace WebDriverHomeworks
             
         }
 
-        
-        
         [Test, Order(1)]
         [Description("Verify flight data")]
         public void VerifyData() 

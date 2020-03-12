@@ -26,23 +26,25 @@ namespace WebDriverHomeworks
             MainPage.FieldFrom.SendKeys(_helpers.FlightFrom);
 
             Thread.Sleep(15000);////////////////////////////////////////
+            //Wait.Until(MainPage.LinkRoute.Displayed);
             
             MainPage.LinkRoute.Click();
 
-            Thread.Sleep(15000);////////////////////////////////////////
+            Thread.Sleep(1500);////////////////////////////////////////
 
             MainPage.FieldTo.Clear();
             MainPage.FieldTo.SendKeys(_helpers.FlightTo);
 
-            Thread.Sleep(15000); ///////////////////////////////////////
+            Thread.Sleep(1500); ///////////////////////////////////////
 
             MainPage.LinkRoute.Click();
 
-            Thread.Sleep(15000);
+            Thread.Sleep(1500);/////////////////////////////////////////
 
             MainPage.SearchFlight.Click();
 
-            //SwitchToNewTab();
+            Thread.Sleep(1500);/////////////////////////////////////////
+
             Assert.NotNull(SelectFlights.PageTitle, "Page title has not been found");
         }
 

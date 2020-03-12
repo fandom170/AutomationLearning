@@ -36,28 +36,30 @@ namespace WebDriverHomeworks.Base
 
         }
 
-        
-
         [OneTimeTearDown]
         public void TearDown () 
         {
-            Thread.Sleep(10000);
+            Thread.Sleep(10000);/////////////////////////////////////
             driver.Close();
             driver.Quit();
         }
 
         public void SwitchToNewTab() 
         {
-            var popup = driver.WindowHandles[1]; // handler for the new tab
-            Assert.IsTrue(!string.IsNullOrEmpty(popup)); // tab was opened
-            //Assert.AreEqual(driver.SwitchTo().Window(popup).Url, "http://blah"); // url is OK  
-            driver.SwitchTo().Window(driver.WindowHandles[1]).Close(); // close the tab
-            
+            var newWindow = driver.WindowHandles[1]; 
+            Assert.IsTrue(!string.IsNullOrEmpty(newWindow)); // tab was opened
+            StringAssert.Contains(_helpers.URLWIZZ, driver.SwitchTo().Window(newWindow).Url, "URL mismatching"); // url is OK  
         }
 
         public void ReturnToParentTab() 
         {
             driver.SwitchTo().Window(driver.WindowHandles[0]);
+        }
+
+        public void closeTab(int tabNo = 0) 
+        {
+            //closed first tab by default
+            driver.SwitchTo().Window(driver.WindowHandles[tabNo]).Close();
         }
     }
 }

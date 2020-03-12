@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using OpenQA.Selenium.Support.UI;
+using System.Threading;
 
 namespace WebDriverHomeworks.Base
 {
-    public class TestBase : InitPages
+    public class TestBase : Base.InitPages
     {
         public IWebDriver driver;
         public WebDriverWait Wait;
@@ -17,9 +19,15 @@ namespace WebDriverHomeworks.Base
         [Obsolete]
         public void SetUp()
         {
-             Wait = new WebDriverWait(driver, new TimeSpan(0, 0, 5));
+             
 
             driver = new OpenQA.Selenium.Chrome.ChromeDriver(_helpers.webDriverPlace);
+
+            Wait = new WebDriverWait(driver, new TimeSpan(0, 0, 5));
+            //Wait = new WebDriverWait(driver, waitForElement);
+            
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(11);
+
             driver.Manage().Window.Maximize();
             driver.Url = _helpers.URLWIZZ;
 
@@ -33,6 +41,7 @@ namespace WebDriverHomeworks.Base
         [OneTimeTearDown]
         public void TearDown () 
         {
+            Thread.Sleep(10000);
             driver.Close();
             driver.Quit();
         }

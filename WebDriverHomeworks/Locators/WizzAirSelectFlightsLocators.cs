@@ -8,6 +8,8 @@ namespace WebDriverHomeworks.Locators
 {
     public static class WizzAirSelectFlightsLocators
     {
+        public static string PageTitle = ".//div[@id = 'booking-flow-step-select-flight']/h2"; //xpath
+
         public static string FlightDate = ".flight-select__flight-info__day";
         public static string PointFrom;
         public static string PointTo;

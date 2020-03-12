@@ -23,7 +23,6 @@ namespace WebDriverHomeworks
             driver.Manage().Window.Maximize();
             driver.Url = _helpers.URLGISMETEO;
             pageGismeteo = new PageGismeteo();
-            //WebDriverWait wait = new WebDriverWait(driver, waitForElement);
         }
 
         [Test, Order(0)]
@@ -43,7 +42,7 @@ namespace WebDriverHomeworks
                 //DO NOTHING
             }
             //Console.WriteLine(pageGismeteo);
-            Assert.That(lisOfAllDivs.Count() > 0, Is.True, "If you see this message, then any divs has not been found");
+            Assert.That(lisOfAllDivs.Count(), Is.GreaterThan(0), "If you see this message, then any divs has not been found");
         }
 
         //2. find all div with h1
@@ -55,7 +54,7 @@ namespace WebDriverHomeworks
             {
                 //DO NOTHING
             }
-            Assert.That(lisOfAllH2Divs.Count() > 0, Is.True, "If you see this message, then any divs with h2 tag has not been found");
+            Assert.That(lisOfAllH2Divs.Count(), Is.GreaterThan(0), "If you see this message, then any divs with h1 tag has not been found");
         }
 
         //3. find all elements with news tiles
@@ -63,15 +62,15 @@ namespace WebDriverHomeworks
         public void GetAllNews() 
         {
             IList<IWebElement> ListOfNews = driver.FindElements(By.CssSelector(Locators.GisMeteoLocators.AllNewsTiles));
-            Assert.IsNotNull(ListOfNews,  "");
+            Assert.IsNotNull(ListOfNews,  "Elemtn is null");
         }
 
-        //4. Find the last element from news tiles////////////////////////////////////////////////
+        //4. Find the last element from news tiles
         [Test(Description = ""), Order(4)]
         public void GetLastSpan() 
         {
             IWebElement LastNews = driver.FindElement(By.XPath(Locators.GisMeteoLocators.LastNewsElement));
-            Assert.IsNotNull(LastNews, "");
+            Assert.IsNotNull(LastNews, "Element is null");
         }
 
         //5. Get all titles from items from #3
@@ -85,7 +84,7 @@ namespace WebDriverHomeworks
             foreach (IWebElement elem in newsTiles) 
             {
                 TitlesList.Add(elem.Text);
-                Assert.IsNotNull(elem.Text, "");
+                Assert.IsNotNull(elem.Text, "Element of list is null");
             }
             Assert.That(TitlesList.Count, Is.GreaterThan(0), "List is empty");
         }
@@ -135,7 +134,7 @@ namespace WebDriverHomeworks
             DateTime now = DateTime.Now;
             
             string date = driver.FindElement(By.XPath(Locators.GisMeteoLocators.CurrentWeekDay)).Text;
-            Assert.That(date, Is.EqualTo(now.ToString("ddd, d MMMM, HH:mm")));
+            Assert.That(date, Is.EqualTo(now.ToString("ddd, d MMMM, HH:mm")), "Dates are not equal");
             
         }
         
@@ -144,11 +143,8 @@ namespace WebDriverHomeworks
         [Description("Get temperature using axis")]
         public void GetTemperature()
         {
-            //IWebElement TemperatureDate = driver.FindElement(By.XPath(".//span[@class = 'tooltip' and contains(@data-text, 'Малооблачно')]/following-sibling           //span[contains(@class, unit_temperature_c)]"));
-            int counter = 1;
+              int counter = 1;
             IList<IWebElement> weatherForecast = driver.FindElements(By.XPath(".//div[contains(@class, '_line iconline clearfix')]//span[@class = 'tooltip']"));
-
-            IWebElement WeatherAlmostsunny = driver.FindElement(By.XPath(".//div[@class = 'weather_item']//span[@class = 'tooltip' and contains(text(), 'Малооблачно')]/ancestor:div[@class ='_line iconline clearfix']/following-sibling::"));
 
             foreach (IWebElement elem in weatherForecast) 
             {
@@ -161,6 +157,16 @@ namespace WebDriverHomeworks
             }
             IWebElement temperature = driver.FindElement(By.XPath(".//div[contains(@class, 'chart chart__temperatureNearest')]/div/div['" + counter + "']"));
             Assert.IsNotNull(temperature.Text, "Appropriaete element has not been found");
+        }
+
+        //12. Find temeperature for main tile
+        [Test, Order(11)]
+        [Description("Get temperature using axis")]
+        public void GetDayTemperature()
+        {
+            
+            IWebElement state = driver.FindElement(By.XPath(Locators.GisMeteoLocators.CurrentTemp));
+            Assert.IsNotNull(state.Text, "Appropriaete element has not been found");
         }
 
 

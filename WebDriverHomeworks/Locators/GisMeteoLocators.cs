@@ -20,5 +20,7 @@ namespace WebDriverHomeworks.Locators
         public static string ThreeDaysLink = ".//li[@class = 'nolink subnav_item']//a[contains(text(), '3')]";
 
         public static string CurrentWeekDay = ".//div[@id = 'time']/span";
+
+        public static string CurrentTemp = ".//div[contains(@class, 'description gray')]/ancestor::div[@class = 'wn_body']//div[@data-type = 'temperature']";
     }
 }

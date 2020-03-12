@@ -12,7 +12,13 @@ namespace WebDriverHomeworks
     [TestFixture]
     class WizzAirTest : Base.TestBase
     {
-        
+
+        private void WaitUntilIsDisplayed(IWebElement element) 
+        {
+            Wait.Until(_ => element.Displayed);
+        }
+
+
 
         [Test, Order(1)]
         [Description("Click on Find button")]
@@ -27,7 +33,12 @@ namespace WebDriverHomeworks
 
             Thread.Sleep(15000);////////////////////////////////////////
             //Wait.Until(MainPage.LinkRoute.Displayed);
-            
+
+            IWebElement s = driver.FindElement(By.Id(""));
+            Wait.Until(_ => s.Displayed);
+
+
+
             MainPage.LinkRoute.Click();
 
             Thread.Sleep(1500);////////////////////////////////////////
@@ -43,7 +54,7 @@ namespace WebDriverHomeworks
 
             MainPage.SearchFlight.Click();
 
-            Thread.Sleep(1500);/////////////////////////////////////////
+            Thread.Sleep(15000);/////////////////////////////////////////
 
             Assert.NotNull(SelectFlights.PageTitle, "Page title has not been found");
         }

@@ -21,9 +21,7 @@ namespace WebDriverHomeworks.Pages
 
         public IWebElement FieldFrom => driver.FindElement(By.Id(Locators.WizzAirMainPageLocators.FlightFrom));
         public IWebElement LinkRoute => driver.FindElement(By.CssSelector(Locators.WizzAirMainPageLocators.RouteSelection));
-
         public IWebElement FieldTo => driver.FindElement(By.Id(Locators.WizzAirMainPageLocators.FlightTo));
-        
         public IWebElement SearchFlight => driver.FindElement(By.XPath(Locators.WizzAirMainPageLocators.FindButton));
         
     }

@@ -8,10 +8,11 @@ namespace WebDriverHomeworks.Locators
 {
     static class WizzAirSignInLocators
     {
-        public static string FieldFirstName = "passenger-first-name-0"; //ID
-        public static string FieldLastName = "passenger-last-name-0"; //ID
-        public static string FieldGenderMale = "passenger-gender-0-male"; //ID
+        
 
-        public static string ButtonContinue = "passengers-continue-btn"; //ID
+        public static string FieldEmail = ".//input[@name = 'email' and @type = 'email']"; //xpath
+        public static string FieldPassword = ".//input[@name = 'password' and @type = 'password']"; //xpath
+
+        public static string LableSignInHeader = "modal__header__WZZP0Pw-fqdSpZdJs5zTj"; //id
     }
 }

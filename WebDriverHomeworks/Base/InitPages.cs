@@ -9,9 +9,21 @@ namespace WebDriverHomeworks.Base
 {
     public class InitPages
     {
-        //protected IWebDriver driver;
 
+        public IWebDriver driver;
         public Pages.WizzAirMain MainPage;
         public Pages.WizzAirSelectFlights SelectFlights;
+        public Pages.WizzAirPassengerDataLuggage PagePassengerData;
+        public Pages.WizzAirSignIn SignIn;
+
+        [Obsolete]
+        public void initPages(IWebDriver driver)
+        {
+            MainPage = new Pages.WizzAirMain(driver);
+            SelectFlights = new Pages.WizzAirSelectFlights(driver);
+            PagePassengerData = new Pages.WizzAirPassengerDataLuggage(driver);
+            SignIn = new Pages.WizzAirSignIn(driver);
+        }
+    
     }
 }

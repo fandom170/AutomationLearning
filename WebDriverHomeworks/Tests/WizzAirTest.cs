@@ -75,6 +75,7 @@ namespace WebDriverHomeworks
              */
             //SwitchToNewTab(1);
             //SwitchToNewTab("Wizz Air");
+            driver.SwitchTo().Window(driver.WindowHandles[0]);
             driver.SwitchTo().Window(driver.WindowHandles[1]);
             driver.SwitchTo().DefaultContent();
             Thread.Sleep(100000);

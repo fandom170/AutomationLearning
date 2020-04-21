@@ -19,10 +19,10 @@ namespace WebDriverHomeworks.Pages
             PageFactory.InitElements(driver, this);
         }
 
-        public IWebElement FieldFrom => driver.FindElement(By.Id(Locators.WizzAirMainPageLocators.FlightFrom));
-        public IWebElement LinkRoute => driver.FindElement(By.CssSelector(Locators.WizzAirMainPageLocators.RouteSelection));
-        public IWebElement FieldTo => driver.FindElement(By.Id(Locators.WizzAirMainPageLocators.FlightTo));
-        public IWebElement SearchFlight => driver.FindElement(By.XPath(Locators.WizzAirMainPageLocators.FindButton));
+        public IWebElement LinkRoute() { return driver.FindElement(Locators.WizzAirMainPageLocators.RouteSelection); }
+        public IWebElement FlightTo() { return driver.FindElement(Locators.WizzAirMainPageLocators.FlightTo); }
+        public IWebElement SearchFlight() { return driver.FindElement(Locators.WizzAirMainPageLocators.FindButton); }
+        public IWebElement FieldFrom() { return driver.FindElement(Locators.WizzAirMainPageLocators.FlightFrom); }
         
     }
 }

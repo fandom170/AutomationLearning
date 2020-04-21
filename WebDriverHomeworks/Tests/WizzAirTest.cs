@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,21 +14,8 @@ namespace WebDriverHomeworks
     [Obsolete]
     class WizzAirTest : Base.TestBase
     {
-
-        Func<IWebDriver, bool> waitForRoutePoint = new Func<IWebDriver, bool>((IWebDriver Web) =>
-        {
-            IWebElement element = Web.FindElement(By.CssSelector(Locators.WizzAirMainPageLocators.RouteSelection));
-            if (element.Displayed)
-            {
-                return true;
-            }
-            return false;
-        });
-
-
-
-
-
+        
+        
         [Test, Order(1)]
         [Description("Click on Find button")]
         public void RunSearch()
@@ -39,27 +27,17 @@ namespace WebDriverHomeworks
              5. click on serch button
              6. make sure that new screen has been opened*/
 
-            Thread.Sleep(15000);
+            LogTest.Info("Start Message");
 
+            Wait.Until(ExpectedConditions.ElementExists(Locators.WizzAirMainPageLocators.FlightFrom));
             Assert.That(driver.Title, Is.EqualTo(_helpers.MainPageName), "Titles have differences");
-
-            MainPage.FieldFrom.Clear();
-            MainPage.FieldFrom.Click();
-            MainPage.FieldFrom.SendKeys(_helpers.FlightFrom);
-
-            Thread.Sleep(15000);////////////////////////////////////////
-            Wait.Until(waitForRoutePoint);
-            MainPage.LinkRoute.Click();
-            MainPage.FieldTo.Clear();
-            MainPage.FieldTo.SendKeys(_helpers.FlightTo);
-            Thread.Sleep(1500);////////////////////////////////////////
-            Wait.Until(waitForRoutePoint);
-
-            MainPage.LinkRoute.Click();
-            MainPage.SearchFlight.Click();
-
-            Thread.Sleep(10000);/////////////////////////////////////////
-            
+            PopulateField(MainPage.FieldFrom(), _helpers.FlightFrom);
+            Wait.Until(ExpectedConditions.ElementExists(Locators.WizzAirMainPageLocators.RouteSelection));
+            MainPage.LinkRoute().Click();
+            PopulateField(MainPage.FlightTo(), _helpers.FlightTo);
+            Wait.Until(ExpectedConditions.ElementExists(Locators.WizzAirMainPageLocators.RouteSelection));
+            MainPage.LinkRoute().Click();
+            MainPage.SearchFlight().Click();
         }
 
         [Test, Order(2)]
@@ -70,35 +48,40 @@ namespace WebDriverHomeworks
              * 2. Check From and To labels
              * 2. Make sure that reverce flight is not populated
              * 3. Click on show prices button
-             * 4. Select middlw tile (click on button)
+             * 4. Select middle tile (click on button)
              * 5. Make sure that new screen is opened
              */
-            //SwitchToNewTab(1);
-            //SwitchToNewTab("Wizz Air");
-            driver.SwitchTo().Window(driver.WindowHandles[0]);
-            driver.SwitchTo().Window(driver.WindowHandles[1]);
-            driver.SwitchTo().DefaultContent();
-            Thread.Sleep(100000);
-            Assert.NotNull(SelectFlights.PageTitle, "Page title has not been found");
-            StringAssert.Contains(SelectFlights.DestinationPoints.Text, _helpers.FlightFromFull, "From Point has not been found");
-            StringAssert.Contains(SelectFlights.DestinationPoints.Text, _helpers.FlightToFull, "To Point has not been found");
-            SelectFlights.ButtonShowPrices.Click();
-            Thread.Sleep(3000);/////////////////////////////////////////////////////////
-            SelectFlights.ButtonMiddlePrice.Click();
-            Thread.Sleep(3000);/////////////////////////////////////////////////////////
-            //Assert That //screen changes
+            driver.SwitchTo().Window(driver.WindowHandles.Last());
+            BasePage.CloseCookieBar.Click();
+            Wait.Until(ExpectedConditions.InvisibilityOfElementLocated(Locators.WizzAirSelectFlightsLocators.Spinner));
+            Wait.Until(ExpectedConditions.ElementToBeClickable(Locators.WizzAirSelectFlightsLocators.ButtonShowPrices));
+            SelectFlights.ClosePopup();
+            Assert.NotNull(SelectFlights.PageTitle(), "Page title has not been found");
+            StringAssert.Contains(_helpers.FlightFromFull, SelectFlights.DestinationPoints().Text, "From Point has not been found");
+            StringAssert.Contains(_helpers.FlightToFull, SelectFlights.DestinationPoints().Text, "To Point has not been found");
+            Assert.That(SelectFlights.ReturnFlightBlock(), Is.Null, "Return Flights Block is active");
+            Assert.That(SelectFlights.ReturnFlightLink(), Is.Not.Null, "Return flights block is populated");
+            SelectFlights.ClosePopup();
+            SelectFlights.ButtonShowPrices().Click();
+            Wait.Until(ExpectedConditions.ElementToBeClickable(SelectFlights.ButtonMiddlePrice()));
+            //Assert that prices are displayed
+            
+            foreach (IWebElement elem in SelectFlights.PricesList()) 
+            {
+                Assert.IsNotEmpty(elem.Text, "Price is not presented in the list for tile");
+            }
 
+            SelectFlights.ButtonMiddlePrice().Click();
+            Assert.That(SelectFlights.DivSelectedFlights, Is.Not.Null, "Selected Flight is not presented");
         }
 
         [Test, Order(3)]
         [Description("Confirming of flight data")]
         public void SelectOffer()
         {
-            Thread.Sleep(20000);
-            Assert.That(SelectFlights.ChangedPageTitle.Text, Is.EqualTo("Your trip to " + _helpers.FlightToFull), "Expected Textt was returned");
-            SelectFlights.ButtonContinue.Click();
-            
-            //Assert that page is changed
+            Wait.Until(ExpectedConditions.ElementToBeClickable(Locators.WizzAirSelectFlightsLocators.ButtonContinue)); //button have mot be = disabled="disabled"
+            SelectFlights.ButtonContinue().Click();
+            Assert.That(SelectFlights.ChangedPageTitle().Text, Is.EqualTo("YOUR TRIP TO" + _helpers.FlightToFull.ToUpper()), "Trip points differ from expected");
         }
 
         [Test, Order(4)]
@@ -106,31 +89,40 @@ namespace WebDriverHomeworks
         public void SetPassenger()
         {
             /*1. Set First Name
-             2. Set Last Name
-             3. Set Gender = Male
-             4. Click on continue*/
+            2. Set Last Name
+            3. Set Gender = Male
+            4. Click on continue*/
 
-            Thread.Sleep(10000);
-            //Assert page title
-            PagePassengerData.FieldFirstName.Clear();
-            PagePassengerData.FieldFirstName.SendKeys(_helpers.PassengerFN);
-            PagePassengerData.FieldLastName.Clear();
-            PagePassengerData.FieldLastName.SendKeys(_helpers.PassengerLN);
-            PagePassengerData.ButtonPassengerGender.Click();
-            Thread.Sleep(10000);
+            Wait.Until(ExpectedConditions.ElementIsVisible(Locators.WizzAirPassengerLuggageLocators.FieldFirstName));
+            Assert.That(PassengerAndLuggageData.PageTitle().Text, Is.EqualTo("PASSENGERS AND BAGGAGES"), "Title of page is not Passengers and Baggages");
+            PopulateField(PassengerAndLuggageData.FieldFirstName(), (_helpers.PassengerFN));
+            Wait.Until(ExpectedConditions.ElementIsVisible(Locators.WizzAirPassengerLuggageLocators.FieldLastName));
+            PopulateField(PassengerAndLuggageData.FieldLastName(), _helpers.PassengerLN);
+            //Thread.Sleep(1000);
+            PassengerAndLuggageData.ButtonPassengerGender().Click();
+            Wait.Until(ExpectedConditions.ElementIsVisible(Locators.WizzAirPassengerLuggageLocators.ButtonContinue));
+            Assert.That(PassengerAndLuggageData.ButtonContinue().Enabled, Is.True, "Button Continue is not active");
+            
+            ScrollToElement(PassengerAndLuggageData.ButtonContinue());
+            PassengerAndLuggageData.ButtonContinue().Click();  //WHY???????????????????????????????
+            PassengerAndLuggageData.ButtonContinue().Submit();
+
         }
 
         [Test, Order(5)]
         public void SignInCheck()
         {
             /*Check that title matches expected
-             * Check that Email field is presented
-             * Check that Password field is presented*/
-            Assert.That(SignIn.LabelTitle, Is.EqualTo(_helpers.SignInPageName), "Titles for Sign In page do not match");
+            * Check that Email field is presented
+            * Check that Password field is presented*/
 
+            Wait.Until(ExpectedConditions.ElementToBeClickable(Locators.WizzAirSignInLocators.FieldEmail));
+            Assert.That(SignIn.LabelTitle().Text, Is.EqualTo(_helpers.SignInPageName), "Titles for Sign In page do not match");
+            Assert.That(SignIn.FieldEmail, Is.Not.Null, "Not a signIn page. No Email field");
+            Assert.That(SignIn.FieldPassword, Is.Not.Null, "Not a signIn page. No Password field");
+
+            //Thread.Sleep(6000);
         }
-
-
 
     }
 }

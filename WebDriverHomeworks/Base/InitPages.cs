@@ -11,17 +11,19 @@ namespace WebDriverHomeworks.Base
     {
 
         public IWebDriver driver;
+        public Pages.WizzAirBasePage BasePage;
         public Pages.WizzAirMain MainPage;
         public Pages.WizzAirSelectFlights SelectFlights;
-        public Pages.WizzAirPassengerDataLuggage PagePassengerData;
+        public Pages.WizzAirPassengerDataLuggage PassengerAndLuggageData;
         public Pages.WizzAirSignIn SignIn;
 
         [Obsolete]
         public void initPages(IWebDriver driver)
         {
+            BasePage = new Pages.WizzAirBasePage(driver);
             MainPage = new Pages.WizzAirMain(driver);
             SelectFlights = new Pages.WizzAirSelectFlights(driver);
-            PagePassengerData = new Pages.WizzAirPassengerDataLuggage(driver);
+            PassengerAndLuggageData = new Pages.WizzAirPassengerDataLuggage(driver);
             SignIn = new Pages.WizzAirSignIn(driver);
         }
     

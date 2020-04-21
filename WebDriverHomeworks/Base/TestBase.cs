@@ -7,32 +7,35 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Support.UI;
 using System.Threading;
+using log4net;
+using Microsoft.Extensions.Logging;
+using System.Reflection;
 
 namespace WebDriverHomeworks.Base
 {
+    
+
     [Obsolete]
     public class TestBase : Base.InitPages
     {
-        public IWebDriver driver;
         public WebDriverWait Wait;
         public WebDriverWait WaitMin;
+        public ILog LogTest;
+
 
         [OneTimeSetUp]
         [Obsolete]
         public void SetUp()
         {
             driver = new OpenQA.Selenium.Chrome.ChromeDriver(_helpers.webDriverPlace);
-
-            Wait = new WebDriverWait(driver, new TimeSpan(0, 0, 5));
-            WaitMin = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
+            Wait = new WebDriverWait(driver, new TimeSpan(0, 0, 180));
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(11);
             driver.Manage().Window.Maximize();
             driver.Url = _helpers.URLWIZZ;
 
-            initPages(driver);
-            //MainPage = new Pages.WizzAirMain(driver);
-            //SelectFlights = new Pages.WizzAirSelectFlights(driver);
+            LogTest = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+            initPages(driver);
         }
 
         [OneTimeTearDown]
@@ -40,50 +43,45 @@ namespace WebDriverHomeworks.Base
         {
             if (driver != null)
             {
-                //driver.Close();
-                //driver.Quit();
+                driver.Close();
+                driver.Quit();
             }
         }
 
-        public void SwitchToNewTab(int i) 
-        {
-            var newWindow = driver.WindowHandles[i]; 
-            Assert.IsTrue(!string.IsNullOrEmpty(newWindow)); // tab was opened
-            StringAssert.Contains(_helpers.URLWIZZ, driver.SwitchTo().Window(newWindow).Url, "URL mismatching"); // url is OK  
-            
-        }
-
-        public void SwitchToNewTab(string str) 
-        {
-            var newWindow = driver.WindowHandles.Contains(str);
-        }
-
-        public void ReturnToParentTab() 
-        {
-            driver.SwitchTo().Window(driver.WindowHandles[0]);
-            //driver.SwitchTo().Window(driver.WindowHandles.First());
-        }
-
-        public void SwitchTo () 
-        {
-            driver.SwitchTo().DefaultContent();
-        }
-
+        
         public void closeTab(int tabNo = 0) 
         {
             //closed first tab by default
             driver.SwitchTo().Window(driver.WindowHandles[tabNo]).Close();
         }
 
-        
-
-        public void WaitForElement(IWebElement element) 
+        public void ScrollToElement(IWebElement element) 
         {
-            DefaultWait<IWebElement> wait = new DefaultWait<IWebElement>(element);
-            wait.Timeout = TimeSpan.FromMinutes(2);
-            wait.PollingInterval = TimeSpan.FromMilliseconds(2500);
+            ScrollToView(element);
         }
 
+        public void ScrollTo(int xPosition = 0, int yPosition = 0)
+        {
+            var js = String.Format("window.scrollTo({0}, {1})", xPosition, yPosition);
+            IJavaScriptExecutor je = (IJavaScriptExecutor)driver;
+            je.ExecuteScript(js);
+        }
+
+        public void ScrollToView(IWebElement element)
+        {
+            if (element.Location.Y > 200)
+            {
+                ScrollTo(0, element.Location.Y - 100); // Make sure element is in the view but below the top navigation pane
+            }
+
+        }
+
+        public void PopulateField(IWebElement element, String data) 
+        {
+            element.Clear();
+            element.SendKeys(data);
+
+        }
 
     }
 }

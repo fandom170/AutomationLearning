@@ -19,9 +19,10 @@ namespace WebDriverHomeworks.Pages
             PageFactory.InitElements(driver, this);
         }
 
-        public IWebElement FieldEmail => driver.FindElement(By.XPath(Locators.WizzAirSignInLocators.FieldEmail));
-        public IWebElement FieldPassword => driver.FindElement(By.XPath(Locators.WizzAirSignInLocators.FieldPassword));
-        public IWebElement LabelTitle => driver.FindElement(By.Id(Locators.WizzAirSignInLocators.LableSignInHeader));
+        //public IWebElement FieldEmail => driver.FindElement(By.XPath(Locators.WizzAirSignInLocators.FieldEmail));
+        public IWebElement FieldPassword() { return driver.FindElement(Locators.WizzAirSignInLocators.FieldPassword); }
+        public IWebElement LabelTitle() { return driver.FindElement(Locators.WizzAirSignInLocators.LableSignInHeader); }
+        public IWebElement FieldEmail() { return driver.FindElement(Locators.WizzAirSignInLocators.FieldEmail); }
 
     }
 }

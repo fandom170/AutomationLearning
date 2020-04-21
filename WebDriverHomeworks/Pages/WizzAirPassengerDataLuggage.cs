@@ -19,14 +19,10 @@ namespace WebDriverHomeworks.Pages
             PageFactory.InitElements(driver, this);
         }
 
-        public IWebElement FieldFirstName => driver.FindElement(By.Id(Locators.WizzAirPassengerLuggageLocators.FieldFirstName));
-        public IWebElement FieldLastName => driver.FindElement(By.Id(Locators.WizzAirPassengerLuggageLocators.FieldLastName));
-        public IWebElement ButtonPassengerGender => driver.FindElement(By.Id(Locators.WizzAirPassengerLuggageLocators.FieldGenderMale));
-        public IWebElement Buttoncontinue => driver.FindElement(By.Id(Locators.WizzAirPassengerLuggageLocators.ButtonContinue));
-
-
-
-
-
+        public IWebElement FieldFirstName() { return driver.FindElement(Locators.WizzAirPassengerLuggageLocators.FieldFirstName); }
+        public IWebElement FieldLastName() { return driver.FindElement(Locators.WizzAirPassengerLuggageLocators.FieldLastName); }
+        public IWebElement ButtonPassengerGender() { return driver.FindElement(Locators.WizzAirPassengerLuggageLocators.FieldGenderMale); }
+        public IWebElement ButtonContinue() { return driver.FindElement(Locators.WizzAirPassengerLuggageLocators.ButtonContinue); }
+        public IWebElement PageTitle() { return driver.FindElement(Locators.WizzAirPassengerLuggageLocators.LabelPageTitle); }
     }
 }
